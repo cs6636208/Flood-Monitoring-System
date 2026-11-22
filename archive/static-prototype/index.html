@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f7f4" />
+    <meta name="description" content="Flood Monitor Thailand — แผนที่เฝ้าระวังน้ำท่วม แจ้งเหตุ และขอความช่วยเหลือ" />
+    <title>น้ำทัน | Flood Monitor Thailand</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-water" viewBox="0 0 24 24"><path d="M3 8c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2M2 13c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M4 18c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H11a3 3 0 0 0 3-3v-2a3 3 0 0 1 3-3h1"/></symbol>
+      <symbol id="i-shelter" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10h-6v-6H9v6H3z"/><path d="M9 11h6"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3h.01"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/></symbol>
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 5v9l9 5 9-5V8m-9 5v9"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-car" viewBox="0 0 24 24"><path d="m5 11 2-5h10l2 5 2 2v5h-2v-2H5v2H3v-5l2-2Zm1 0h12M7 14h.01M17 14h.01"/></symbol>
+      <symbol id="i-boat" viewBox="0 0 24 24"><path d="m3 15 2 4h14l2-4-9 2-9-2Zm9 2V4m0 2 5 7h-5M12 7 7 14h5"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    </svg>
+
+    <div class="demo-ribbon"><span class="demo-dot"></span> ตัวอย่างระบบ · ข้อมูลและเหตุการณ์ทั้งหมดเป็นข้อมูลจำลอง ไม่ใช่สถานการณ์จริง</div>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="น้ำทัน หน้าหลัก">
+        <span class="brand-mark"><svg class="icon"><use href="#i-water"/></svg></span>
+        <span><b>น้ำทัน</b><small>FLOOD MONITOR THAILAND</small></span>
+      </a>
+      <nav class="main-nav" aria-label="เมนูหลัก">
+        <a class="nav-link active" href="#map-section"><span>แผนที่</span></a>
+        <a class="nav-link" href="#safe-section"><span>จุดปลอดภัย</span></a>
+        <a class="nav-link" href="#guide-section"><span>คำแนะนำ</span></a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button mobile-menu" id="mobile-menu" aria-label="เปิดเมนู"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <button class="button button-quiet team-toggle" id="team-toggle"><span class="team-status"></span> หน้าทีมช่วยเหลือ</button>
+        <button class="button button-danger header-sos" data-open-modal="help-modal"><svg class="icon"><use href="#i-alert"/></svg> ขอความช่วยเหลือ</button>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero-wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse"></span> ศูนย์เฝ้าระวังสถานการณ์</div>
+          <h1>รู้ก่อนเสี่ยง<br /><em>ไปต่ออย่างปลอดภัย</em></h1>
+          <p>ติดตามพื้นที่เสี่ยง ตรวจสอบเส้นทาง และขอความช่วยเหลือได้ทันที<br class="desktop-only" /> ไม่ต้องสมัครสมาชิก</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#map-section"><svg class="icon"><use href="#i-pin"/></svg> ดูแผนที่ความเสี่ยง</a>
+            <button class="button button-outline" data-open-modal="report-modal"><svg class="icon"><use href="#i-alert"/></svg> แจ้งเหตุ / รายงานจุดน้ำท่วม</button>
+          </div>
+          <div class="hero-meta"><span><svg class="icon"><use href="#i-clock"/></svg> ข้อมูลจำลอง · อัปเดต 14:20 น.</span><span class="meta-divider"></span><span>คาดการณ์ตัวอย่าง 3–4 ชม.</span></div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="sun-glow"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+          <div class="rain rain-one"></div><div class="rain rain-two"></div><div class="rain rain-three"></div>
+          <div class="hero-water"></div><div class="hero-house"><span></span></div>
+          <div class="forecast-bubble"><span class="bubble-icon"><svg class="icon"><use href="#i-water"/></svg></span><span><b>เฝ้าระวังน้ำเพิ่ม</b><small>ตัวอย่างการแจ้งเตือน</small></span><span class="bubble-arrow">↗</span></div>
+          <div class="hero-caption">ภาพประกอบพื้นที่จำลอง</div>
+        </div>
+      </section>
+
+      <section class="alert-strip" aria-label="ประกาศเฝ้าระวัง">
+        <div class="alert-symbol"><svg class="icon"><use href="#i-alert"/></svg></div>
+        <div class="alert-text"><b>เฝ้าระวังฝนตกหนักในพื้นที่ตัวอย่าง</b><span>เป็นข้อมูลจำลองเพื่อสาธิตหน้าจอ · โปรดตรวจสอบสภาพจริงก่อนเดินทาง</span></div>
+        <button class="alert-more" data-open-modal="alerts-modal">ดูการแจ้งเตือน <span>→</span></button>
+      </section>
+
+      <section class="quick-stats" aria-label="สรุปสถานการณ์ตัวอย่าง">
+        <article class="stat-card"><span class="stat-icon stat-amber"><svg class="icon"><use href="#i-water"/></svg></span><div><small>พื้นที่เฝ้าระวัง</small><b>4 <span>จุด</span></b></div><span class="stat-note">ข้อมูลจำลอง</span></article>
+        <article class="stat-card"><span class="stat-icon stat-red"><svg class="icon"><use href="#i-alert"/></svg></span><div><small>รายงานที่ต้องตรวจสอบ</small><b id="report-count">2 <span>รายการ</span></b></div><span class="stat-note">ยังไม่ยืนยัน</span></article>
+        <article class="stat-card"><span class="stat-icon stat-green"><svg class="icon"><use href="#i-shelter"/></svg></span><div><small>จุดปลอดภัยใกล้เคียง</small><b>3 <span>แห่ง</span></b></div><span class="stat-note">สถานะตัวอย่าง</span></article>
+        <article class="stat-card"><span class="stat-icon stat-blue"><svg class="icon"><use href="#i-route"/></svg></span><div><small>เส้นทางที่ตรวจสอบ</small><b>2 <span>เส้นทาง</span></b></div><span class="stat-note">จำลองตามประเภทรถ</span></article>
+      </section>
+
+      <section class="content-grid" id="map-section">
+        <div class="map-panel panel">
+          <div class="section-heading map-heading">
+            <div><div class="eyebrow eyebrow-muted">SITUATION MAP</div><h2>แผนที่ความเสี่ยง</h2><p>พื้นที่สาธิต · อ.เมืองเชียงใหม่</p></div>
+            <div class="map-controls"><button class="select-button" id="area-select">⌖ <span>พื้นที่ตัวอย่าง</span><b>⌄</b></button><button class="icon-button map-expand" id="map-expand" aria-label="ขยายแผนที่">⤢</button></div>
+          </div>
+          <div class="map-view" id="map-view" role="img" aria-label="แผนที่สาธิตแสดงแม่น้ำ ถนน จุดปลอดภัย และพื้นที่เฝ้าระวัง">
+            <div class="map-grid"></div>
+            <svg class="map-art" viewBox="0 0 900 570" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <path class="map-block" d="M0 0h900v570H0z"/>
+              <path class="park" d="M571 17c44 10 74 50 54 88-19 37-39 56-19 91 18 32-4 69-47 63-41-6-55-34-72-70-18-39-48-64-31-108C473 39 522 5 571 17Z"/>
+              <path class="park" d="M91 346c36-15 63 5 77 34 13 28 4 57-28 73-34 17-72 4-81-24-9-29-2-69 32-83Z"/>
+              <path class="road road-major" d="M-30 117C149 148 233 180 370 157s274-79 564-27"/><path class="road road-major" d="M104-34c-6 135 69 213 124 300s81 166 66 343"/><path class="road road-major" d="M-30 433c180-63 319-68 450-40s262 85 521 55"/>
+              <path class="road" d="M29 242c116 13 187 42 260 27s148-68 220-60 173 52 330 21"/><path class="road" d="M373-20c21 109 46 186 44 260s-25 154 17 349"/><path class="road" d="M692-12c-34 84-41 165-21 242s71 144 73 255"/><path class="road" d="M8 511c116-69 193-109 301-106s221 61 306 43 179-89 316-106"/>
+              <path class="road-local" d="M35 48c93 33 138 70 196 80m-175 176c70-34 130-52 195-47m83-220c-20 57-24 103-2 151m45 298c-11-70-6-116 28-173m145-263c49 19 92 36 138 31m82 164c46-10 103-10 166 6M508 328c54-24 101-28 154-13M196 512c29-47 63-74 113-91"/>
+              <path class="river" d="M-40 301c99-37 153-16 230 12s129 48 204 29 131-74 217-77 164 36 226 18 77-43 108-55"/>
+              <path class="river-highlight" d="M-40 301c99-37 153-16 230 12s129 48 204 29 131-74 217-77 164 36 226 18 77-43 108-55"/>
+              <path class="flood-zone" d="M283 228c40-35 100-41 144-22 35 15 51 50 29 82-28 39-68 54-123 50-49-3-89-33-87-63 1-19 17-35 37-47Z"/>
+              <path class="flood-zone flood-zone-light" d="M630 360c46-27 106-25 130 8s11 72-27 92-93 16-120-12-19-65 17-88Z"/>
+              <path class="route-line route-safe" d="M122 186c76 22 112 46 152 81s68 64 125 66 106-22 141-57 55-78 105-102 110-13 168 13"/>
+              <path class="route-line route-caution" d="M122 186c52 21 92 22 130 44s75 45 92 78 10 66-17 95-71 50-93 84"/>
+              <g class="map-label"><rect x="356" y="265" width="96" height="27" rx="8"/><text x="404" y="283" text-anchor="middle">ลำน้ำตัวอย่าง</text></g>
+              <g class="map-label map-label-muted"><rect x="590" y="65" width="105" height="26" rx="8"/><text x="642" y="82" text-anchor="middle">สวนสาธารณะ</text></g>
+            </svg>
+            <span class="map-road-label road-label-one">ถนนสายหลัก</span><span class="map-road-label road-label-two">ถนนชุมชน</span>
+            <button class="map-marker marker-danger" data-point="จุดรายงานน้ำท่วม" aria-label="ดูจุดรายงานน้ำท่วม"><span><svg class="icon"><use href="#i-water"/></svg></span></button>
+            <button class="map-marker marker-danger marker-two" data-point="จุดเฝ้าระวังน้ำเพิ่ม" aria-label="ดูจุดเฝ้าระวังน้ำเพิ่ม"><span><svg class="icon"><use href="#i-alert"/></svg></span></button>
+            <button class="map-marker marker-safe marker-three" data-point="ศูนย์พักพิงชุมชน" aria-label="ดูศูนย์พักพิง"><span><svg class="icon"><use href="#i-shelter"/></svg></span></button>
+            <button class="map-marker marker-safe marker-four" data-point="จุดจอดรถปลอดภัย" aria-label="ดูจุดจอดรถ"><span><svg class="icon"><use href="#i-car"/></svg></span></button>
+            <div class="map-legend"><span><i class="legend-dot dot-danger"></i> เฝ้าระวัง</span><span><i class="legend-dot dot-safe"></i> จุดปลอดภัย</span><span><i class="legend-line"></i> เส้นทางแนะนำ</span></div>
+            <div class="map-compass">N<br /><span>↑</span></div>
+            <button class="map-close" id="map-close" aria-label="ย่อแผนที่">ย่อแผนที่ ×</button>
+            <div class="map-watermark">แผนที่จำลอง · ไม่ใช่แผนที่นำทางจริง</div>
+          </div>
+          <div class="map-footer"><span class="freshness"><i class="fresh-dot"></i> ข้อมูลสาธิต · อัปเดต 14:20 น.</span><button class="text-button" id="map-refresh">↻ รีเฟรชข้อมูลตัวอย่าง</button></div>
+        </div>
+
+        <aside class="side-column">
+          <section class="panel route-panel">
+            <div class="section-heading compact-heading"><div><div class="eyebrow eyebrow-muted">SAFE ROUTE</div><h2>ตรวจสอบเส้นทาง</h2></div><span class="mini-icon"><svg class="icon"><use href="#i-route"/></svg></span></div>
+            <form id="route-form" class="route-form">
+              <label class="field-label" for="route-from">จุดเริ่มต้น</label><div class="input-with-icon"><svg class="icon"><use href="#i-pin"/></svg><input id="route-from" value="ตำแหน่งของฉัน" aria-label="จุดเริ่มต้น" /></div>
+              <label class="field-label" for="route-to">ปลายทาง</label><div class="input-with-icon"><svg class="icon"><use href="#i-pin"/></svg><input id="route-to" placeholder="เช่น ศูนย์พักพิง" required /></div>
+              <label class="field-label">เดินทางด้วย</label>
+              <div class="vehicle-select" role="group" aria-label="เลือกประเภทรถ">
+                <button type="button" class="vehicle-option selected" data-vehicle="car"><svg class="icon"><use href="#i-car"/></svg><span>รถเก๋ง</span></button>
+                <button type="button" class="vehicle-option" data-vehicle="motorcycle"><span class="vehicle-emoji">◉</span><span>มอเตอร์ไซค์</span></button>
+                <button type="button" class="vehicle-option" data-vehicle="pickup"><span class="vehicle-emoji">▰</span><span>กระบะยกสูง</span></button>
+                <button type="button" class="vehicle-option" data-vehicle="bus"><span class="vehicle-emoji">▤</span><span>รถเมล์</span></button>
+                <button type="button" class="vehicle-option" data-vehicle="boat"><svg class="icon"><use href="#i-boat"/></svg><span>เรือ</span></button>
+              </div>
+              <button class="button button-primary route-submit" type="submit">ค้นหาเส้นทางปลอดภัย <span>→</span></button>
+            </form>
+            <div class="route-result" id="route-result" aria-live="polite">
+              <div class="result-placeholder"><span class="route-empty-icon"><svg class="icon"><use href="#i-route"/></svg></span><span>กรอกปลายทางเพื่อดูตัวอย่างการประเมินเส้นทาง</span></div>
+            </div>
+            <p class="fine-print">ข้อมูลเส้นทางจำลอง โปรดตรวจสอบสภาพจริง และหลีกเลี่ยงกระแสน้ำเชี่ยว</p>
+          </section>
+
+          <section class="panel nearby-panel" id="safe-section">
+            <div class="section-heading compact-heading"><div><div class="eyebrow eyebrow-muted">NEAR YOU</div><h2>จุดปลอดภัยใกล้เคียง</h2></div><button class="text-button" id="all-places">ดูทั้งหมด →</button></div>
+            <div class="place-list">
+              <article class="place-card"><span class="place-icon place-green"><svg class="icon"><use href="#i-shelter"/></svg></span><div class="place-info"><b>ศูนย์พักพิงชุมชน</b><small>เปิดให้บริการ · สถานะตัวอย่าง</small></div><span class="place-distance">1.2 <small>กม.</small></span></article>
+              <article class="place-card"><span class="place-icon place-blue"><svg class="icon"><use href="#i-car"/></svg></span><div class="place-info"><b>จุดจอดรถยกระดับ</b><small>มีพื้นที่จอด · สถานะตัวอย่าง</small></div><span class="place-distance">1.8 <small>กม.</small></span></article>
+              <article class="place-card"><span class="place-icon place-violet"><svg class="icon"><use href="#i-phone"/></svg></span><div class="place-info"><b>จุดรวมพลโรงเรียน</b><small>กำลังตรวจสอบสถานะ</small></div><span class="place-distance">2.4 <small>กม.</small></span></article>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="report-section panel" id="report-section">
+        <div class="report-heading"><div><div class="eyebrow eyebrow-muted">COMMUNITY REPORTS</div><h2>รายงานจากชุมชน</h2><p>ช่วยกันแจ้งจุดเสี่ยง ข้อมูลใหม่จะยังไม่ยืนยันจนกว่าจะได้รับการตรวจสอบ</p></div><button class="button button-outline" data-open-modal="report-modal"><svg class="icon"><use href="#i-alert"/></svg> แจ้งเหตุ</button></div>
+        <div class="report-list" id="report-list">
+          <article class="report-card"><span class="report-status status-review">รอตรวจสอบ</span><div class="report-main"><b>มีน้ำขังบนถนนชุมชน</b><span><svg class="icon"><use href="#i-pin"/></svg> จุดตัวอย่าง A · รายงานเมื่อ 14:08 น.</span></div><span class="report-type">น้ำท่วม</span></article>
+          <article class="report-card"><span class="report-status status-review">รอตรวจสอบ</span><div class="report-main"><b>น้ำเริ่มเอ่อใกล้ทางแยก</b><span><svg class="icon"><use href="#i-pin"/></svg> จุดตัวอย่าง B · รายงานเมื่อ 13:52 น.</span></div><span class="report-type">เฝ้าระวัง</span></article>
+        </div>
+      </section>
+
+      <section class="guide-section" id="guide-section">
+        <div class="guide-heading"><div><div class="eyebrow eyebrow-muted">BE FLOOD READY</div><h2>เตรียมพร้อม ลดความเสี่ยง</h2></div><span class="guide-note">คำแนะนำทั่วไป · ทำตามคำแนะนำจากผู้เชี่ยวชาญในพื้นที่</span></div>
+        <div class="guide-grid">
+          <article class="guide-card"><span class="guide-num">01</span><span class="guide-icon guide-amber"><svg class="icon"><use href="#i-alert"/></svg></span><h3>ก่อนออกเดินทาง</h3><p>ตรวจเส้นทางและสถานะปลายทาง เตรียมยา น้ำดื่ม โทรศัพท์ และแบตเตอรี่สำรอง</p><button data-guide="ก่อนออกเดินทาง">อ่านคำแนะนำ <span>→</span></button></article>
+          <article class="guide-card"><span class="guide-num">02</span><span class="guide-icon guide-blue"><svg class="icon"><use href="#i-water"/></svg></span><h3>เมื่อเจอน้ำท่วม</h3><p>อย่าฝ่ากระแสน้ำหรือขับผ่านจุดที่มองไม่เห็นพื้นถนน หากไม่มั่นใจให้หยุดในที่ปลอดภัย</p><button data-guide="เมื่อเจอน้ำท่วม">อ่านคำแนะนำ <span>→</span></button></article>
+          <article class="guide-card"><span class="guide-num">03</span><span class="guide-icon guide-red"><svg class="icon"><use href="#i-phone"/></svg></span><h3>ไฟฟ้าและสัตว์อันตราย</h3><p>หลีกเลี่ยงสายไฟที่ตกหรือบริเวณไฟรั่ว อย่าเข้าใกล้สัตว์อันตราย แจ้งเหตุจากระยะปลอดภัย</p><button data-guide="ไฟฟ้าและสัตว์อันตราย">อ่านคำแนะนำ <span>→</span></button></article>
+        </div>
+      </section>
+
+      <section class="community-cta"><div class="cta-mark"><svg class="icon"><use href="#i-box"/></svg></div><div><b>ต้องการถุงยังชีพ?</b><p>ปักจุดรับและระบุจำนวนที่ต้องการ ทีมช่วยเหลือจะอัปเดตสถานะคำขอให้</p></div><button class="button button-white" data-open-modal="supply-modal">ขอถุงยังชีพ <span>→</span></button></section>
+    </main>
+
+    <footer class="site-footer"><div class="footer-brand"><span class="brand-mark"><svg class="icon"><use href="#i-water"/></svg></span><b>น้ำทัน</b></div><p>Flood Monitor Thailand · ช่วยให้ทุกคนเข้าถึงข้อมูลและความช่วยเหลือได้ง่ายขึ้น</p><div class="footer-meta"><span>ไม่ต้องสมัครสมาชิก</span><span>•</span><span>ข้อมูลจำลองเพื่อสาธิต</span><button data-open-modal="privacy-modal">ความเป็นส่วนตัว</button></div></footer>
+    <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="help-modal" aria-labelledby="help-title">
+      <form class="modal-card" id="help-form">
+        <button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button>
+        <div class="modal-eyebrow"><span class="modal-icon modal-icon-red"><svg class="icon"><use href="#i-phone"/></svg></span> ขอความช่วยเหลือ</div>
+        <h2 id="help-title">แจ้งเหตุฉุกเฉิน</h2><p class="modal-intro">แจ้งตำแหน่งและรายละเอียดให้ทีมช่วยเหลือ โดยไม่ต้องสมัครสมาชิก</p>
+        <div class="demo-callout"><b>หน้าจอสาธิต</b> การส่งข้อมูลนี้จะสร้างเคสตัวอย่างในหน้านี้เท่านั้น ยังไม่มีทีมกู้ภัยได้รับแจ้ง</div>
+        <label class="field-label" for="help-type">ต้องการความช่วยเหลือเรื่อง</label><select id="help-type" required><option value="ติดค้าง / อพยพ">ติดค้าง / อพยพ</option><option value="ผู้บาดเจ็บ">ผู้บาดเจ็บ</option><option value="สัตว์อันตราย">พบสัตว์อันตราย</option><option value="ไฟรั่ว / สายไฟตก">ไฟรั่ว / สายไฟตก</option><option value="อื่น ๆ">อื่น ๆ</option></select>
+        <div id="animal-note" class="inline-safety" hidden>อย่าเข้าใกล้สัตว์ ถ่ายภาพจากระยะปลอดภัยและรอทีมที่ได้รับมอบหมาย</div>
+        <label class="field-label" for="help-location">ตำแหน่ง</label><div class="input-action"><input id="help-location" value="ตำแหน่งตัวอย่าง · ปักหมุดบนแผนที่" required /><button type="button" id="use-location">ใช้ตำแหน่งฉัน</button></div><small class="field-hint">ต้นแบบนี้ไม่ได้เชื่อม GPS จริง คุณสามารถแก้ไขตำแหน่งตัวอย่างได้</small>
+        <div class="form-two"><div><label class="field-label" for="help-people">จำนวนผู้ประสบภัย</label><input id="help-people" type="number" min="1" value="1" required /></div><div><label class="field-label" for="help-contact">เบอร์ติดต่อ (ไม่บังคับ)</label><input id="help-contact" type="tel" placeholder="08X-XXX-XXXX" /></div></div>
+        <label class="field-label" for="help-detail">รายละเอียดเพิ่มเติม</label><textarea id="help-detail" rows="3" placeholder="เช่น มีผู้สูงอายุ ผู้ป่วย หรือเด็กเล็ก"></textarea>
+        <label class="consent-row"><input type="checkbox" id="share-location" /><span><b>ยินยอมแชร์ตำแหน่งระหว่างช่วยเหลือ</b><small>ตำแหน่งสดจะใช้เฉพาะเคสนี้และหยุดเมื่อปิดเคส · ในต้นแบบไม่มีการติดตามจริง</small></span></label>
+        <button class="button button-danger modal-submit" type="submit"><svg class="icon"><use href="#i-alert"/></svg> ส่งคำขอช่วยเหลือ</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="report-modal" aria-labelledby="report-title">
+      <form class="modal-card" id="report-form">
+        <button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button>
+        <div class="modal-eyebrow"><span class="modal-icon modal-icon-amber"><svg class="icon"><use href="#i-alert"/></svg></span> รายงานจากชุมชน</div>
+        <h2 id="report-title">แจ้งจุดเสี่ยงหรือเหตุ</h2><p class="modal-intro">รายงานจะขึ้นสถานะรอตรวจสอบก่อนใช้ประกอบการแจ้งเตือน</p>
+        <div class="demo-callout"><b>หน้าจอสาธิต</b> เหตุการณ์จะถูกบันทึกในตัวอย่างนี้เท่านั้น ไม่ได้ส่งถึงหน่วยงานหรือเจ้าหน้าที่จริง</div>
+        <label class="field-label" for="report-type">ประเภทเหตุ</label><select id="report-type" required><option>น้ำท่วม / น้ำขัง</option><option>ถนนผ่านไม่ได้</option><option>ไฟรั่ว / สายไฟตก</option><option>พบสัตว์อันตราย</option><option>อื่น ๆ</option></select>
+        <label class="field-label" for="report-location">ตำแหน่ง</label><input id="report-location" value="จุดตัวอย่าง C" required />
+        <label class="field-label" for="report-detail">รายละเอียด</label><textarea id="report-detail" rows="3" placeholder="บอกสิ่งที่พบและเวลาที่พบ"></textarea>
+        <label class="field-label" for="report-photo">แนบภาพ (ไม่บังคับ)</label><input class="file-input" type="file" id="report-photo" accept="image/*" /><small class="field-hint">ต้นแบบนี้ไม่อัปโหลดหรือจัดเก็บไฟล์ภาพ</small>
+        <button class="button button-primary modal-submit" type="submit">ส่งรายงานตัวอย่าง <span>→</span></button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="supply-modal" aria-labelledby="supply-title">
+      <form class="modal-card" id="supply-form">
+        <button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button>
+        <div class="modal-eyebrow"><span class="modal-icon modal-icon-green"><svg class="icon"><use href="#i-box"/></svg></span> ขอรับถุงยังชีพ</div>
+        <h2 id="supply-title">แจ้งจุดรับความช่วยเหลือ</h2><p class="modal-intro">ระบุจำนวนชุดและคนที่ต้องการรับ ทีมช่วยเหลือจะพิจารณาจัดส่งตามความพร้อม</p>
+        <div class="demo-callout"><b>หน้าจอสาธิต</b> คำขอนี้ยังไม่ได้ส่งให้ทีมจัดส่งจริง</div>
+        <label class="field-label" for="supply-location">ตำแหน่งที่ต้องการรับ</label><input id="supply-location" value="ตำแหน่งตัวอย่าง · ปักหมุดบนแผนที่" required />
+        <div class="form-two"><div><label class="field-label" for="supply-count">จำนวนถุงยังชีพ</label><input id="supply-count" type="number" min="1" value="1" required /></div><div><label class="field-label" for="supply-people">จำนวนผู้รับ</label><input id="supply-people" type="number" min="1" value="1" required /></div></div>
+        <label class="field-label" for="supply-needs">สิ่งจำเป็นเพิ่มเติม (ไม่บังคับ)</label><textarea id="supply-needs" rows="2" placeholder="เช่น นมเด็ก ยาประจำตัว น้ำดื่ม"></textarea>
+        <label class="field-label" for="supply-contact">เบอร์ติดต่อ (ไม่บังคับ)</label><input id="supply-contact" type="tel" placeholder="08X-XXX-XXXX" />
+        <button class="button button-primary modal-submit" type="submit">ส่งคำขอตัวอย่าง <span>→</span></button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="alerts-modal" aria-labelledby="alerts-title"><div class="modal-card simple-modal"><button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button><div class="modal-eyebrow"><span class="modal-icon modal-icon-amber"><svg class="icon"><use href="#i-water"/></svg></span> ตัวอย่างประกาศ</div><h2 id="alerts-title">การแจ้งเตือนพื้นที่</h2><div class="alert-detail"><b>เฝ้าระวังฝนตกหนักและน้ำเพิ่ม</b><p>พื้นที่สาธิต · ตัวอย่างการคาดการณ์ช่วง 3–4 ชั่วโมง ข้อมูลนี้ไม่ได้อ้างอิงสภาพอากาศจริง</p><small><svg class="icon"><use href="#i-clock"/></svg> ข้อมูลตัวอย่าง · 14:20 น. · ความเชื่อมั่นจำลอง</small></div><div class="alert-detail alert-detail-soft"><b>รายงานจากชุมชน 2 จุด</b><p>ทั้งสองรายการยังไม่ผ่านการตรวจสอบ กรุณาใช้ความระมัดระวังและสังเกตสภาพจริง</p></div><button class="button button-primary modal-submit" data-close-modal>รับทราบ</button></div></dialog>
+
+    <dialog class="modal" id="guide-modal" aria-labelledby="guide-modal-title"><div class="modal-card simple-modal"><button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button><div class="modal-eyebrow"><span class="modal-icon modal-icon-blue"><svg class="icon"><use href="#i-water"/></svg></span> คำแนะนำเพื่อความปลอดภัย</div><h2 id="guide-modal-title">เตรียมพร้อมก่อนเกิดน้ำท่วม</h2><div id="guide-modal-content" class="guide-modal-content"></div><p class="fine-print">เนื้อหาในต้นแบบเป็นคำแนะนำทั่วไป โปรดทำตามประกาศและคำแนะนำจากผู้เชี่ยวชาญในพื้นที่</p></div></dialog>
+
+    <dialog class="modal" id="privacy-modal" aria-labelledby="privacy-title"><div class="modal-card simple-modal"><button class="modal-close" type="button" data-close-modal aria-label="ปิด"><svg class="icon"><use href="#i-close"/></svg></button><div class="modal-eyebrow"><span class="modal-icon modal-icon-green"><svg class="icon"><use href="#i-check"/></svg></span> ความเป็นส่วนตัว</div><h2 id="privacy-title">คุณควบคุมข้อมูลตำแหน่ง</h2><p>ต้นแบบนี้ไม่ส่งข้อมูลออกจากเครื่อง ไม่ใช้ GPS จริง และไม่อัปโหลดภาพ การแชร์ตำแหน่งสดในระบบจริงควรเริ่มเมื่อผู้ใช้ร้องขอและยินยอมเท่านั้น พร้อมจำกัดผู้เข้าถึงและหยุดแชร์เมื่อปิดเคส</p><button class="button button-primary modal-submit" data-close-modal>เข้าใจแล้ว</button></div></dialog>
+
+    <section class="team-view" id="team-view" hidden>
+      <div class="team-topline"><div><div class="eyebrow eyebrow-muted">RESPONSE OPERATIONS · DEMO</div><h1>ศูนย์ประสานงานช่วยเหลือ</h1><p>แผงควบคุมจำลอง · ใช้แสดงขั้นตอนจัดการเคสเท่านั้น</p></div><button class="button button-outline" id="back-to-public">← กลับหน้าประชาชน</button></div>
+      <div class="team-warning"><svg class="icon"><use href="#i-alert"/></svg><span><b>โหมดสาธิต</b> ไม่มีเจ้าหน้าที่รับแจ้งจริง และไม่มีการส่งเคสออกนอกอุปกรณ์นี้</span></div>
+      <div class="team-metrics"><article><small>เคสที่ยังเปิด</small><b id="open-cases">3</b></article><article><small>เคสเร่งด่วน</small><b class="metric-red">1</b></article><article><small>คำขอถุงยังชีพ</small><b id="supply-cases">1</b></article><article><small>เซนเซอร์ขาดสัญญาณ</small><b class="metric-amber">1</b></article></div>
+      <div class="team-layout"><section class="panel incident-panel"><div class="team-panel-heading"><div><h2>รายการเคส</h2><p>เรียงตามความเร่งด่วนและเวลารับแจ้ง</p></div><select id="case-filter" aria-label="กรองรายการเคส"><option value="all">ทุกเคส</option><option value="help">ขอความช่วยเหลือ</option><option value="report">รายงานเหตุ</option><option value="supply">ถุงยังชีพ</option></select></div><div id="incident-list" class="incident-list"></div></section>
+        <aside class="team-aside"><section class="panel sensor-panel"><div class="team-panel-heading"><div><h2>สุขภาพเซนเซอร์</h2><p>ตัวอย่างการตรวจสัญญาณ</p></div><span class="sensor-badge">1 ต้องตรวจสอบ</span></div><div class="sensor-row"><span class="sensor-light sensor-down"></span><div><b>สถานีวัดระดับน้ำ · จุดตัวอย่าง D</b><small>ขาดสัญญาณ 18 นาที · ข้อมูลถูกลดความเชื่อมั่น</small></div><button class="icon-button" data-toast="บันทึกว่าเซนเซอร์ได้รับการตรวจสอบแล้ว">✓</button></div><div class="sensor-row"><span class="sensor-light"></span><div><b>เครื่องวัดฝน · จุดตัวอย่าง A</b><small>ทำงานปกติ · ข้อมูลสาธิต</small></div><span class="sensor-ok">ปกติ</span></div></section>
+        <section class="panel team-map-card"><div class="team-panel-heading"><div><h2>ภาพรวมพื้นที่</h2><p>ตำแหน่งและขอบเขตจำลอง</p></div><span class="live-pill"><i></i> DEMO</span></div><div class="mini-map"><div class="mini-river"></div><span class="mini-point mini-p1">!</span><span class="mini-point mini-p2">!</span><span class="mini-point mini-p3">+</span><span class="mini-map-label">พื้นที่สาธิต</span></div><div class="team-map-foot"><span>รายงานที่รอตรวจสอบ <b id="pending-count">2</b></span><button class="text-button" id="view-public-map">เปิดแผนที่ →</button></div></section></aside>
+      </div>
+    </section>
+    <footer class="team-footer" id="team-footer" hidden>น้ำทัน · ศูนย์ประสานงานช่วยเหลือ · หน้าจอสาธิต · ไม่มีข้อมูลบุคคลจริง</footer>
+  </body>
+</html>
